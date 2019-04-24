@@ -41,10 +41,20 @@ func (ds *developerSettings) readFromEnv() {
 	if value == "" {
 		value = os.Getenv("X-META-Developer-Settings")
 	}
-	//	уточнить у Артура как это задумывалось
+	if value != "" {
+		err := json.Unmarshal([]byte(value), ds)
+		check(err)
+	}
 }
 
 func buildPath(path string) string {
 	dir, _ := os.UserHomeDir()
 	return dir + path
+}
+
+func readDeveloperSettings() *developerSettings {
+	ds := &developerSettings{}
+	ds.readConfig(devSettingsPath)
+	ds.readFromEnv()
+	return ds
 }
