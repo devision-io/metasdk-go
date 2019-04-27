@@ -67,7 +67,7 @@ func (m *Meta) nativeCall(service, method, httpMethod string, data []byte) []byt
 	for k, v := range m.defaultHeaders {
 		req.Header.Set(k, v)
 	}
-	for i := 0; i < 10; i++ {
+	for i := 0; i < 20; i++ {
 		resp, err := client.Do(req)
 		check(err)
 
@@ -78,10 +78,12 @@ func (m *Meta) nativeCall(service, method, httpMethod string, data []byte) []byt
 			} else {
 				log.Panic("Не удалось получить данные")
 			}
+		} else {
+			return body
 		}
-		return body
+
 	}
 
-	//def native_api_call(self, service, method, data, options, multipart_form=False, multipart_form_data=None, stream=False, http_path="/api/meta/v1/", http_method='POST',
-	//get_params=None, connect_timeout_sec=60):
+	log.Panic("Не удалось связатьсяс ервисом")
+	return nil
 }
