@@ -33,5 +33,8 @@ func (m *Meta) query(options map[string]string, command string, maxRows int, par
 
 func (m *Meta) one(options map[string]string, command string, maxRows int, parameters map[string]string) map[string]interface{} {
 	rows := m.query(options, command, maxRows, parameters)
-	return rows[0]
+	if len(rows) > 0 {
+		return rows[0]
+	}
+	return nil
 }
