@@ -1,9 +1,17 @@
 // для создания пользовательских типов
 package metasdk
 
+// Основной тип для работы с Мета хранит все данные для нормальной работы
 type Meta struct {
-	MetaURL     string
-	ApiProxyURL string
+	MetaURL           string
+	ApiProxyURL       string
+	AuthUserId        int8
+	developerSettings *developerSettings
+	defaultHeaders    map[string]string
+	serviceNameSpace  string
+	serviceId         string
+	buildNum          string
+	postfix           string
 }
 
 //тип для вычитывания настроек разработчика
