@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-func (m *Meta) query(options map[string]string, command string, maxRows int, parameters ...map[string]string) []map[string]interface{} {
+func (m *Meta) query(options map[string]string, command string, maxRows int, parameters map[string]string) []map[string]interface{} {
 	dbQuery := dbQuery{}
 	dbQuery.Database = map[string]string{
 		"alias": options["dbAlias"],
@@ -29,4 +29,9 @@ func (m *Meta) query(options map[string]string, command string, maxRows int, par
 	check(json.Unmarshal(resp, &dbResponse))
 
 	return dbResponse.Rows
+}
+
+func (m *Meta) one(options map[string]string, command string, maxRows int, parameters map[string]string) map[string]interface{} {
+	rows := m.query(options, command, maxRows, parameters)
+	return rows[0]
 }
