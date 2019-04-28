@@ -84,6 +84,6 @@ func (m *Meta) nativeCall(service, method, httpMethod string, data []byte) []byt
 
 	}
 
-	log.Panic("Не удалось связатьсяс ервисом")
+	log.Panic("Не удалось связаться с сервисом")
 	return nil
 }
