@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-func (m *Meta) query(options map[string]string, command string, maxRows int, parameters map[string]string) []map[string]interface{} {
+func (m *Meta) Query(options map[string]string, command string, maxRows int, parameters map[string]string) dbResponse {
 	dbQuery := dbQuery{}
 	dbQuery.Database = map[string]string{
 		"alias": options["dbAlias"],
@@ -28,19 +28,19 @@ func (m *Meta) query(options map[string]string, command string, maxRows int, par
 	dbResponse := dbResponse{}
 	check(json.Unmarshal(resp, &dbResponse))
 
-	return dbResponse.Rows
+	return dbResponse
 }
 
-func (m *Meta) one(options map[string]string, command string, maxRows int, parameters map[string]string) map[string]interface{} {
-	rows := m.query(options, command, maxRows, parameters)
+func (m *Meta) One(options map[string]string, command string, maxRows int, parameters map[string]string) map[string]interface{} {
+	rows := m.Query(options, command, maxRows, parameters).Rows
 	if len(rows) > 0 {
 		return rows[0]
 	}
 	return nil
 }
 
-func (m *Meta) all(options map[string]string, command string, parameters map[string]string) []map[string]interface{} {
+func (m *Meta) All(options map[string]string, command string, parameters map[string]string) []map[string]interface{} {
 	maxRows := 0
-	rows := m.query(options, command, maxRows, parameters)
+	rows := m.Query(options, command, maxRows, parameters).Rows
 	return rows
 }
