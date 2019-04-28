@@ -38,3 +38,9 @@ func (m *Meta) one(options map[string]string, command string, maxRows int, param
 	}
 	return nil
 }
+
+func (m *Meta) all(options map[string]string, command string, parameters map[string]string) []map[string]interface{} {
+	maxRows := 0
+	rows := m.query(options, command, maxRows, parameters)
+	return rows
+}
