@@ -5,16 +5,17 @@ import (
 	"log"
 )
 
-func (m *Meta) Query(options map[string]string, command string, maxRows int, parameters map[string]string) dbResponse {
-	dbQuery := dbQuery{}
-	dbQuery.Database = map[string]string{
-		"alias": options["dbAlias"],
-	}
-	dbQuery.DbQuery = map[string]interface{}{
-		"maxRows":    maxRows,
-		"command":    command,
-		"parameters": parameters,
-		"shardKey":   options["shardKey"],
+func (m *Meta) Query(command string, maxRows int, parameters map[string]string) DbResponse {
+	dbQuery := dbQuery{
+		Database: database{
+			Alias: m.DbName,
+		},
+		DbQuery: dbquery{
+			MaxRows:    maxRows,
+			Command:    command,
+			Parameters: parameters,
+			ShardKey:   nil,
+		},
 	}
 
 	req, err := json.Marshal(dbQuery)
@@ -25,22 +26,20 @@ func (m *Meta) Query(options map[string]string, command string, maxRows int, par
 		log.Panic("Произошла ошибка при запросе в БД")
 	}
 
-	dbResponse := dbResponse{}
+	dbResponse := DbResponse{}
 	check(json.Unmarshal(resp, &dbResponse))
 
 	return dbResponse
 }
 
-func (m *Meta) One(options map[string]string, command string, maxRows int, parameters map[string]string) map[string]interface{} {
-	rows := m.Query(options, command, maxRows, parameters).Rows
-	if len(rows) > 0 {
-		return rows[0]
-	}
-	return nil
+func (m *Meta) One(command string, parameters map[string]string) map[string]interface{} {
+	maxRows := 1
+	rows := m.Query(command, maxRows, parameters).Rows
+	return rows[0]
 }
 
-func (m *Meta) All(options map[string]string, command string, parameters map[string]string) []map[string]interface{} {
+func (m *Meta) All(command string, parameters map[string]string) []map[string]interface{} {
 	maxRows := 0
-	rows := m.Query(options, command, maxRows, parameters).Rows
+	rows := m.Query(command, maxRows, parameters).Rows
 	return rows
 }
