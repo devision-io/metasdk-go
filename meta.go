@@ -45,7 +45,7 @@ func (m *Meta) Meta() {
 		bn = "0"
 	}
 	m.buildNum = bn
-
+	m.userAgent = fmt.Sprintf("%s | b%s | %s", m.serviceId, m.buildNum, m.postfix)
 	createDefaultHeader(m)
 
 }
@@ -53,7 +53,7 @@ func (m *Meta) Meta() {
 func createDefaultHeader(m *Meta) {
 	headers := make(map[string]string, 4)
 	headers["content-type"] = "application/json;charset=UTF-8"
-	headers["User-Agent"] = fmt.Sprintf("%s | b%s | %s", m.serviceId, m.buildNum, m.postfix)
+	headers["User-Agent"] = m.userAgent
 	headers["X-META-Developer-Login"] = m.developerSettings.ApiHeaders.Login
 	headers["X-META-Developer-Token"] = m.developerSettings.ApiHeaders.Token
 	m.defaultHeaders = headers

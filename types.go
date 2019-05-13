@@ -10,9 +10,11 @@ type Meta struct {
 	developerSettings *developerSettings
 	defaultHeaders    map[string]string
 	serviceNameSpace  string
+	userAgent         string
 	serviceId         string
 	buildNum          string
 	postfix           string
+	flattenCache      map[string]interface{}
 }
 
 //тип для вычитывания настроек разработчика
@@ -57,4 +59,15 @@ type database struct {
 type DbResponse struct {
 	MetaData interface{}              `json:"metaData"`
 	Rows     []map[string]interface{} `json:"rows"`
+}
+
+type ApiProxyResponse struct {
+	Error  ApiProxyError `json:"error"`
+	Result interface{}   `json:"result"`
+}
+
+type ApiProxyError struct {
+	Type        string `json:"type"`
+	Message     string `json:"message"`
+	WaitingTime int    `json:"waiting_time"`
 }
