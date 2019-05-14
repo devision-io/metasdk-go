@@ -14,7 +14,7 @@ type Meta struct {
 	serviceId         string
 	buildNum          string
 	postfix           string
-	flattenCache      map[string]interface{}
+	settingsCache     map[string]map[string]interface{}
 }
 
 //тип для вычитывания настроек разработчика

@@ -50,6 +50,7 @@ func (m *Meta) CallAPIProxy(engine, method string, payload map[string]interface{
 		}
 
 	}
+	return nil, errors.New("End of tries")
 }
 
 func checkErr(resp *http.Response, analyzeErr bool, substrVariants []string) (*ApiProxyResponse, error) {
