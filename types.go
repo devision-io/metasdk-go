@@ -49,7 +49,7 @@ type dbquery struct {
 	MaxRows    int               `json:"maxRows"`
 	Command    string            `json:"command"`
 	Parameters map[string]string `json:"parameters"`
-	ShardKey   interface{}       `json:"parameters,omitempty"`
+	ShardKey   interface{}       `json:"shard_key,omitempty"`
 }
 type database struct {
 	Alias string `json:"alias"`
@@ -70,4 +70,16 @@ type ApiProxyError struct {
 	Type        string `json:"type"`
 	Message     string `json:"message"`
 	WaitingTime int    `json:"waiting_time"`
+}
+
+type ExternalSystemSettings struct {
+	ExSystemId string                 `json:"ex_system_id,omitempty"`
+	Login      string                 `json:"login,omitempty"`
+	TokenInfo  TokenInfo `json:"token_info,omitempty"`
+	FormData   map[string]interface{} `json:"form_data,omitempty"`
+}
+
+type TokenInfo struct {
+	AccessToken  string `json:"accessToken,omitempty"`
+	RefreshToken string `json:"refreshToken,omitempty"`
 }

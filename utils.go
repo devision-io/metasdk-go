@@ -4,6 +4,7 @@ package metasdk
 import (
 	"github.com/dgrijalva/jwt-go"
 	"log"
+	"strings"
 )
 
 func check(e error) {
@@ -13,8 +14,9 @@ func check(e error) {
 }
 
 // функция декодирования токена
-func JwtDecode(input, key string) string {
+func DecodeJwt(input, key string) string {
 	claims := jwt.MapClaims{}
+	input = strings.Replace(input, "v2:", "", 1)
 	token, _ := jwt.ParseWithClaims(input, claims, func(token *jwt.Token) (interface{}, error) {
 		return []byte(key), nil
 	})
