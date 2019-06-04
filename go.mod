@@ -1,4 +1,4 @@
-module stash.tools.realweb.ru/adplatform/metasdk-golang
+module github.com/devision-io/metasdk-golang
 
 go 1.12
 
