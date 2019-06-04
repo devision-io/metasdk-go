@@ -35,7 +35,10 @@ func (m *Meta) Query(command string, maxRows int, parameters map[string]string) 
 func (m *Meta) One(command string, parameters map[string]string) map[string]interface{} {
 	maxRows := 1
 	rows := m.Query(command, maxRows, parameters).Rows
-	return rows[0]
+	if len(rows) > 0 {
+		return rows[0]
+	}
+	return nil
 }
 
 func (m *Meta) All(command string, parameters map[string]string) []map[string]interface{} {
