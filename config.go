@@ -54,7 +54,10 @@ func buildPath(path string) string {
 
 func readDeveloperSettings() *developerSettings {
 	ds := &developerSettings{}
-	ds.readFromEnv()
+	ds.readConfig(devSettingsPath)
+	if os.Getenv("META_SERVICE_ACCOUNT_SECRET") != "" {
+		ds.readFromEnv()
+	}
 	if ds == (&developerSettings{}) {
 		ds.readConfig(devSettingsPath)
 	}
