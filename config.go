@@ -57,8 +57,7 @@ func readDeveloperSettings() *developerSettings {
 	ds.readConfig(devSettingsPath)
 	if os.Getenv("META_SERVICE_ACCOUNT_SECRET") != "" {
 		ds.readFromEnv()
-	}
-	if ds == (&developerSettings{}) {
+	} else {
 		ds.readConfig(devSettingsPath)
 	}
 	return ds
