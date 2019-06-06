@@ -54,7 +54,9 @@ func buildPath(path string) string {
 
 func readDeveloperSettings() *developerSettings {
 	ds := &developerSettings{}
-	ds.readConfig(devSettingsPath)
 	ds.readFromEnv()
+	if ds == (&developerSettings{}) {
+		ds.readConfig(devSettingsPath)
+	}
 	return ds
 }
