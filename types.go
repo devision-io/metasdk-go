@@ -1,14 +1,20 @@
 // для создания пользовательских типов
 package metasdk
 
+import (
+	"log"
+)
+
 // Основной тип для работы с Мета хранит все данные для нормальной работы
 type Meta struct {
 	MetaURL           string
 	ApiProxyURL       string
 	DbName            string
 	AuthUserId        int8
+	logger            *log.Logger
 	developerSettings *developerSettings
 	defaultHeaders    map[string]string
+	gcloudlog         string
 	serviceNameSpace  string
 	userAgent         string
 	serviceId         string
@@ -75,11 +81,23 @@ type ApiProxyError struct {
 type ExternalSystemSettings struct {
 	ExSystemId string                 `json:"ex_system_id,omitempty"`
 	Login      string                 `json:"login,omitempty"`
-	TokenInfo  TokenInfo `json:"token_info,omitempty"`
+	TokenInfo  TokenInfo              `json:"token_info,omitempty"`
 	FormData   map[string]interface{} `json:"form_data,omitempty"`
 }
 
 type TokenInfo struct {
 	AccessToken  string `json:"accessToken,omitempty"`
 	RefreshToken string `json:"refreshToken,omitempty"`
+}
+
+type FluentMsg struct {
+	Message        string         `json:"message"`
+	Context        string         `json:"context"`
+	Severity       string         `json:"severity"`
+	ServiceContext ServiceContext `json:"serviceContext"`
+}
+
+type ServiceContext struct {
+	Service string `json:"service"`
+	Version string `json:"version"`
 }

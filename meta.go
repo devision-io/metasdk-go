@@ -18,6 +18,8 @@ const (
 )
 
 func (m *Meta) Meta() {
+	var buf bytes.Buffer
+
 	if m.ApiProxyURL == "" {
 		m.ApiProxyURL = apiProxyURL
 	}
@@ -34,6 +36,12 @@ func (m *Meta) Meta() {
 	}
 	m.serviceNameSpace = sns
 
+	glhp := os.Getenv("GCLOUD_LOG_HOST_PORT")
+	if glhp == "" {
+		glhp = "n3.adp.vmc.loc:31891"
+	}
+	m.gcloudlog = glhp
+
 	sid := os.Getenv("SERVICE_ID")
 	if sid == "" {
 		sid = "local_debug_serivce"
@@ -44,6 +52,8 @@ func (m *Meta) Meta() {
 	if bn == "" {
 		bn = "0"
 	}
+
+	m.logger = log.New(&buf, "INFO:", log.Ltime)
 	m.buildNum = bn
 	m.userAgent = fmt.Sprintf("%s | b%s | %s", m.serviceId, m.buildNum, m.postfix)
 	createDefaultHeader(m)
