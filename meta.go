@@ -18,7 +18,6 @@ const (
 )
 
 func (m *Meta) Meta() {
-	var buf bytes.Buffer
 
 	if m.ApiProxyURL == "" {
 		m.ApiProxyURL = apiProxyURL
@@ -53,7 +52,7 @@ func (m *Meta) Meta() {
 		bn = "0"
 	}
 
-	m.logger = log.New(&buf, "INFO:", log.Ltime)
+	m.logger = log.New(os.Stdout, "INFO:", log.Ltime)
 	m.buildNum = bn
 	m.userAgent = fmt.Sprintf("%s | b%s | %s", m.serviceId, m.buildNum, m.postfix)
 	createDefaultHeader(m)

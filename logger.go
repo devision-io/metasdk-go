@@ -10,6 +10,10 @@ import (
 
 func (m *Meta) log(level, msg string, context map[string]interface{}) {
 
+	if context == nil {
+		context = make(map[string]interface{})
+	}
+
 	m.logger.SetPrefix(level + ":")
 	m.logger.Printf("%s %s", msg, context)
 	if (m.serviceId != "local_debug_serivce") && (m.buildNum != "0") {
