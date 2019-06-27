@@ -37,7 +37,7 @@ func (m *Meta) LogWarning(msg string, context map[string]interface{}) {
 
 func (m *Meta) fluent(level, msg string, context map[string]interface{}) {
 
-	hp := strings.Split(":", m.gcloudlog)
+	hp := strings.Split(m.gcloudlog, ":")
 	port, _ := strconv.Atoi(hp[1])
 	logger, _ := fluent.New(
 		fluent.Config{
