@@ -84,7 +84,7 @@ func checkErr(resp *http.Response, analyzeErr bool, substrVariants []string) (*A
 					return nil, retryErr
 				}
 			}
-			return nil, errors.New("Api Proxy Error")
+			return nil, errors.New(fmt.Sprintf("Error: Api Proxy Error Type: %v Message: %v ", result.Error.Type, result.Error.Message))
 		}
 
 	}
